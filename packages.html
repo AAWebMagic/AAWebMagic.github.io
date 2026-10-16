@@ -95,6 +95,12 @@
 
         packages.forEach(pkg => {
           const stars = '<i class="fa-solid fa-star"></i>'.repeat(pkg.stars);
+          const quoteOnly = /maldives|dubai/i.test(
+            [pkg.title, pkg.description, pkg.destination, pkg.location, pkg.emailSubject, pkg.phoneMessage, pkg.image]
+              .filter(Boolean)
+              .join(' ')
+          );
+          const priceLabel = quoteOnly ? 'Ask for a current quote' : pkg.price;
           container.innerHTML += `
             <div class="package-card">
               <div class="card-image" style="background-image: url('images/package-image/${pkg.image}');"></div>
@@ -102,7 +108,7 @@
                 <h3>${pkg.title}</h3>
                 <p class="stars">${stars}</p>
                 <p>${pkg.description}</p>
-                <span class="price-tag">${pkg.price}</span>
+                <span class="price-tag">${priceLabel}</span>
                 <a href="mailto:info@tripntravel.co.uk?subject=${encodeURIComponent(pkg.emailSubject)}" class="btn">
                   <i class="fa-solid fa-envelope"></i> Email Us
                 </a>
